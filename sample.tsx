@@ -88,3 +88,129 @@ const LayoutComponent: React.FC<LayoutComponentProps> = () => {
 };
 
 export default LayoutComponent;
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; // Example: make container take full viewport height
+}
+
+.row {
+  display: flex;
+  width: 100%;
+
+  &.top-row {
+    flex: 0 0 25%; // Top row occupies 25% of container height
+  }
+
+  &.bottom-row {
+    flex: 1; // Bottom row occupies the remaining height
+  }
+}
+
+.col {
+  display: flex;
+  // Default for smaller screens - stacking columns
+  flex-direction: column;
+  padding: 10px; // Add some padding
+
+  &.col-25 {
+    flex-basis: 100%; // Full width on small screens
+  }
+
+  &.col-75 {
+    flex-basis: 100%; // Full width on small screens
+  }
+
+  &.col-50 {
+    flex-basis: 100%; // Full width on small screens
+  }
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0; // Example background
+}
+
+.logo-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; // Ensures the image fits without stretching
+}
+
+.text-container {
+  background-color: #e9e9e9; // Example background
+}
+
+.button-column {
+  background-color: #dcdcdc; // Example background
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly; // Evenly space buttons vertically
+
+  .action-button {
+    margin-bottom: 10px; // Add some space between buttons
+    padding: 10px;
+    cursor: pointer;
+  }
+}
+
+.table-column {
+  background-color: #cccccc; // Example background
+  // Add styling for your table here
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    th, td {
+      border: 1px solid #000;
+      padding: 8px;
+      text-align: left;
+    }
+  }
+}
+
+.empty-column {
+  background-color: #bbbbbb; // Example background
+}
+
+// Responsiveness using Media Queries
+@media (min-width: 768px) { // Apply these styles for screens wider than 768px
+  .row {
+    flex-direction: row; // Arrange columns in a row
+  }
+
+  .col {
+    flex-direction: column; // Keep content in column layout within the grid cell
+
+    &.col-25 {
+      flex-basis: 25%;
+      flex: 1; // Allow flexing to distribute space
+    }
+
+    &.col-75 {
+      flex-basis: 75%;
+      flex: 3; // Allow flexing to distribute space (proportionally 3 times col-25)
+    }
+
+    &.col-50 {
+      flex-basis: 50%;
+      flex: 2; // Allow flexing to distribute space (proportionally 2 times col-25)
+    }
+  }
+
+  .button-column {
+     .action-button {
+       margin-bottom: 0; // Remove bottom margin when in a row layout
+       margin-right: 10px; // Add right margin for horizontal spacing
+       &:last-child {
+         margin-right: 0; // Remove right margin for the last button
+       }
+     }
+     flex-direction: row; // Arrange buttons horizontally
+     justify-content: space-evenly; // Evenly space buttons horizontally
+     align-items: center; // Center buttons vertically
+  }
+}
