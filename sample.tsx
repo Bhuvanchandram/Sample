@@ -94,6 +94,8 @@ export default LayoutComponent;
   display: flex;
   flex-direction: column;
   height: 100vh; // Example: make container take full viewport height
+  // The background color for the outermost div should be applied here or to its parent in your app
+  // background-color: #abcdef; // Example: Apply your desired background color here
 }
 
 .row {
@@ -111,28 +113,17 @@ export default LayoutComponent;
 
 .col {
   display: flex;
-  // Default for smaller screens - stacking columns
-  flex-direction: column;
+  // Columns are always flex containers
+  flex-direction: column; // Ensure content within columns stacks vertically
   padding: 10px; // Add some padding
-
-  &.col-25 {
-    flex-basis: 100%; // Full width on small screens
-  }
-
-  &.col-75 {
-    flex-basis: 100%; // Full width on small screens
-  }
-
-  &.col-50 {
-    flex-basis: 100%; // Full width on small screens
-  }
+  background-color: transparent; // Ensure transparent background for all columns
 }
 
 .logo-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f0f0f0; // Example background
+  // background-color removed for transparency
 }
 
 .logo-image {
@@ -142,24 +133,26 @@ export default LayoutComponent;
 }
 
 .text-container {
-  background-color: #e9e9e9; // Example background
+  // background-color removed for transparency
 }
 
 .button-column {
-  background-color: #dcdcdc; // Example background
+  // background-color removed for transparency
   display: flex;
-  flex-direction: column;
+  flex-direction: column; // Keep buttons stacked vertically
   justify-content: space-evenly; // Evenly space buttons vertically
 
   .action-button {
     margin-bottom: 10px; // Add some space between buttons
     padding: 10px;
     cursor: pointer;
+    background-color: #ffffff; // Example: button background, change as needed
+    border: 1px solid #ccc; // Example: button border
   }
 }
 
 .table-column {
-  background-color: #cccccc; // Example background
+  // background-color removed for transparency
   // Add styling for your table here
   table {
     width: 100%;
@@ -173,7 +166,7 @@ export default LayoutComponent;
 }
 
 .empty-column {
-  background-color: #bbbbbb; // Example background
+  // background-color removed for transparency
 }
 
 // Responsiveness using Media Queries
@@ -183,7 +176,7 @@ export default LayoutComponent;
   }
 
   .col {
-    flex-direction: column; // Keep content in column layout within the grid cell
+    // flex-direction remains column for content within the grid cell
 
     &.col-25 {
       flex-basis: 25%;
@@ -202,15 +195,10 @@ export default LayoutComponent;
   }
 
   .button-column {
-     .action-button {
-       margin-bottom: 0; // Remove bottom margin when in a row layout
-       margin-right: 10px; // Add right margin for horizontal spacing
-       &:last-child {
-         margin-right: 0; // Remove right margin for the last button
-       }
-     }
-     flex-direction: row; // Arrange buttons horizontally
-     justify-content: space-evenly; // Evenly space buttons horizontally
-     align-items: center; // Center buttons vertically
+     flex-direction: column; // Explicitly keep buttons vertical
+     justify-content: space-evenly; // Keep vertical spacing
+      .action-button {
+        margin-right: 0; // Remove any potential horizontal margin from previous example
+      }
   }
 }
