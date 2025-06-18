@@ -1,0 +1,37 @@
+{
+  "surveyTitle": "Q4 Customer Satisfaction Survey",
+  "documentTitle": "Survey Results Analysis",
+  "introduction": "This document summarizes the findings from the Q4 Customer Satisfaction survey conducted in the last week of December. The survey aimed to gauge customer sentiment regarding our new product line and recent support improvements.",
+  "sections": [
+    {
+      "title": "Key Findings",
+      "points": [
+        {
+          "text": "Overall satisfaction has increased by 15% since Q3.",
+          "subpoints": [
+            "Users cited the new user interface (UI) as a major factor.",
+            "The 24/7 support chat was mentioned positively in over 60% of responses."
+          ]
+        },
+        {
+          "text": "Mobile application performance is a recurring concern.",
+          "subpoints": [
+            "Reports of slowness on older Android devices.",
+            "Feature parity with the web application is requested."
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Sentiment Analysis",
+      "paragraph": "The sentiment analysis, performed using our internal NLP model, indicates a predominantly positive outlook. However, a small but vocal segment of power users expressed frustration with the removal of certain legacy features."
+    }
+  ],
+  "satisfactionScores": [
+    { "feature": "Product Design", "score": 8.5, "change": "+1.2" },
+    { "feature": "Customer Support", "score": 9.2, "change": "+0.8" },
+    { "feature": "Mobile App", "score": 6.1, "change": "-0.5" },
+    { "feature": "Pricing", "score": 7.8, "change": "0.0" }
+  ],
+  "generationDate": "2024-10-28"
+}
