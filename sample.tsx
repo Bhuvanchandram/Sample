@@ -1,145 +1,158 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh; // Example: make container take full viewport height
-  // The background color for the outermost div should be applied here or to its parent in your app
-  // background-color: #abcdef; // Example: Apply your desired background color here
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{documentTitle}}</title>
+    <style>
+        /* --- General Body & Font Styling --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            font-size: 11pt;
+            line-height: 1.5;
+            color: #333;
+        }
 
-.row {
-  display: flex;
-  width: 100%;
-}
+        /* --- Page Layout & Header Simulation --- */
+        @page {
+            size: A4;
+            margin: 1in; 
+        }
 
-.top-row {
-  height: 60px; // Set a fixed height for the header row (adjust as needed)
-  flex-shrink: 0; // Prevent the top row from shrinking
-  // flex-basis and flex-grow are not needed when height is fixed in a column flex container
-}
+        body {
+            padding-top: 60px; 
+            padding-bottom: 40px;
+        }
+        
+        /* --- Page Header with Logo --- */
+        .page-header {
+            position: fixed;
+            top: 0.5in;
+            left: 1in;
+            right: 1in;
+            height: 40px;
+            border-bottom: 1px solid #ddd;
+            display: flex; /* Use flexbox for easy alignment */
+            justify-content: space-between; /* Pushes items to ends */
+            align-items: center; /* Vertically centers items */
+            font-size: 9pt;
+            color: #777;
+        }
 
-.bottom-row {
-  flex: 1; // Allow the bottom row to grow and occupy the remaining height
-}
+        .page-header-logo {
+            height: 35px; /* Control the size of your logo */
+            width: auto;
+        }
 
-.col {
-  display: flex;
-  // Columns are always flex containers
-  flex-direction: column; // Ensure content within columns stacks vertically on small screens
-  padding: 10px; // Add some padding
-  background-color: transparent; // Ensure transparent background for all columns
-}
+        .page-footer {
+            position: fixed;
+            left: 1in;
+            right: 1in;
+            bottom: 0.5in;
+            height: 20px;
+            text-align: center;
+            font-size: 9pt;
+            color: #777;
+        }
+        
+        .page-number::after { content: counter(page); }
+        .page-count::after { content: counter(pages); }
 
-.logo-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  // background-color removed for transparency
-}
+        /*
+         * --- IMPORTANT: Page Break Control ---
+         * This CSS tells the PDF renderer how to handle page breaks
+         * to avoid awkwardly splitting content.
+        */
+        h2, h3 {
+            /* Avoid breaking the page right after a heading */
+            page-break-after: avoid; 
+        }
 
-.logo-image {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain; // Ensures the image fits without stretching
-}
+        table, figure, section, ul, li {
+            /* The magic property: avoid breaking elements from the inside */
+            page-break-inside: avoid;
+        }
 
-.text-container {
-  // background-color removed for transparency
-  // Ensure text aligns nicely within the fixed header height
-  display: flex;
-  align-items: center; // Vertically center the text
-  // overflow: hidden; // Optional: Hide overflowing text if it exceeds the container height
-}
+        /* --- Content Styling --- */
+        main { padding: 0 1in; }
+        h1 { color: #1a5faa; font-size: 24pt; text-align: center; }
+        h2 { color: #1a5faa; font-size: 16pt; border-bottom: 2px solid #e0e0e0; padding-bottom: 5px; margin-top: 1.5em; }
+        p { margin-bottom: 1em; }
+        ul { padding-left: 20px; list-style-type: disc; }
+        ul ul { list-style-type: circle; margin-top: 0.5em; }
+        li { margin-bottom: 0.5em; }
 
-.button-column {
-  // background-color removed for transparency
-  display: flex;
-  flex-direction: column; // Keep buttons stacked vertically
-  justify-content: space-evenly; // Evenly space buttons vertically
+        /* --- Table Styling --- */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5em;
+        }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        thead { background-color: #f2f2f2; color: #333; font-weight: bold; display: table-header-group; }
+        tbody tr:nth-child(even) { background-color: #f9f9f9; }
+    </style>
+</head>
+<body>
 
-  .action-button {
-    margin-bottom: 10px; // Add some space between buttons
-    padding: 10px;
-    cursor: pointer;
-    background-color: #ffffff; // Example: button background, change as needed
-    border: 1px solid #ccc; // Example: button border
-  }
-}
+    <header class="page-header">
+        <img src="{{logoImage}}" alt="Company Logo" class="page-header-logo"/>
+        <span>{{surveyTitle}}</span>
+    </header>
 
-.table-column {
-  // background-color removed for transparency
-  // Add styling for your table here
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    th, td {
-      border: 1px solid #000;
-      padding: 8px;
-      text-align: left;
-    }
-  }
-}
+    <footer class="page-footer">
+        Page <span class="page-number"></span> of <span class="page-count"></span>
+    </footer>
 
-.empty-column {
-  // background-color removed for transparency
-}
+    <main>
+        <h1>{{documentTitle}}</h1>
+        <p>{{introduction}}</p>
 
-// Responsiveness using Media Queries
-@media (min-width: 768px) { // Apply these styles for screens wider than 768px
-  .row {
-    flex-direction: row; // Arrange columns in a row
-  }
+        {{#each sections}}
+        <section>
+            <h2>{{title}}</h2>
+            {{#if paragraph}}
+                <p>{{paragraph}}</p>
+            {{/if}}
+            {{#if points}}
+                <ul>
+                    {{#each points}}
+                    <li>
+                        {{text}}
+                        {{#if subpoints}}
+                        <ul>
+                            {{#each subpoints}}
+                            <li>{{this}}</li>
+                            {{/each}}
+                        </ul>
+                        {{/if}}
+                    </li>
+                    {{/each}}
+                </ul>
+            {{/if}}
+        </section>
+        {{/each}}
 
-  .col {
-    // flex-direction remains column for content within the grid cell
-    // Default flex properties for columns in a row on wider screens
-    flex-basis: 0; // Reset flex-basis
-    flex-grow: 1; // Allow columns to grow based on flex-grow value
-  }
-
-  // Specific width distribution for the TOP row columns
-  .top-row {
-    .col-25 { // Logo column
-      flex-basis: 25%;
-      flex-grow: 0; // Prevent growing beyond 25%
-      width: 25%; // Explicit width for clarity
-    }
-    .col-75 { // Text column
-      flex-basis: 75%;
-      flex-grow: 0; // Prevent growing beyond 75%
-      width: 75%; // Explicit width for clarity
-      // overflow: hidden; // Optional: Hide overflowing text if it exceeds the container height
-    }
-  }
-
-
-  // Specific width distribution for the BOTTOM row columns
-  .bottom-row {
-    .button-column { // First column of bottom row
-      flex-basis: 10%;
-      flex-grow: 0; // Prevent growing beyond 10%
-      width: 10%; // Explicit width for clarity
-    }
-    .table-column { // Middle column of bottom row
-      flex-basis: 80%;
-      flex-grow: 0; // Prevent growing beyond 80%
-      width: 80%; // Explicit width for clarity
-    }
-    .empty-column { // Last column of bottom row
-      flex-basis: 10%;
-      flex-grow: 0; // Prevent growing beyond 10%
-      width: 10%; // Explicit width for clarity
-    }
-  }
-
-
-  .button-column {
-     flex-direction: column; // Explicitly keep buttons vertical
-     justify-content: space-evenly; // Keep vertical spacing
-      .action-button {
-        margin-right: 0; // Ensure no horizontal margin
-      }
-  }
-   .text-container {
-      align-items: center; // Vertically center text when in a row
-   }
-}
+        <h2>Satisfaction Score Breakdown</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Score (/10)</th>
+                    <th>Change from Q3</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each satisfactionScores}}
+                <tr>
+                    <td>{{feature}}</td>
+                    <td>{{score}}</td>
+                    <td>{{change}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>
