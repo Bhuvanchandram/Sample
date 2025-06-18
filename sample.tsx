@@ -17,10 +17,12 @@
         /* --- Page Layout & Header Simulation --- */
         @page {
             size: A4;
-            margin: 1in; 
+            /* Top/Bottom margin 1in, Left/Right margin 0.5in */
+            margin: 1in 0.5in;
         }
 
         body {
+            /* Keep padding for header/footer space */
             padding-top: 60px; 
             padding-bottom: 40px;
         }
@@ -29,26 +31,28 @@
         .page-header {
             position: fixed;
             top: 0.5in;
-            left: 1in;
-            right: 1in;
+            /* Match the new page margins */
+            left: 0.5in;
+            right: 0.5in;
             height: 40px;
             border-bottom: 1px solid #ddd;
-            display: flex; /* Use flexbox for easy alignment */
-            justify-content: space-between; /* Pushes items to ends */
-            align-items: center; /* Vertically centers items */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-size: 9pt;
             color: #777;
         }
 
         .page-header-logo {
-            height: 35px; /* Control the size of your logo */
+            height: 35px;
             width: auto;
         }
 
         .page-footer {
             position: fixed;
-            left: 1in;
-            right: 1in;
+            /* Match the new page margins */
+            left: 0.5in;
+            right: 0.5in;
             bottom: 0.5in;
             height: 20px;
             text-align: center;
@@ -59,23 +63,17 @@
         .page-number::after { content: counter(page); }
         .page-count::after { content: counter(pages); }
 
-        /*
-         * --- IMPORTANT: Page Break Control ---
-         * This CSS tells the PDF renderer how to handle page breaks
-         * to avoid awkwardly splitting content.
-        */
+        /* --- Page Break Control --- */
         h2, h3 {
-            /* Avoid breaking the page right after a heading */
             page-break-after: avoid; 
         }
 
         table, figure, section, ul, li {
-            /* The magic property: avoid breaking elements from the inside */
             page-break-inside: avoid;
         }
 
         /* --- Content Styling --- */
-        main { padding: 0 1in; }
+        /* main padding is no longer needed as the @page margin handles it */
         h1 { color: #1a5faa; font-size: 24pt; text-align: center; }
         h2 { color: #1a5faa; font-size: 16pt; border-bottom: 2px solid #e0e0e0; padding-bottom: 5px; margin-top: 1.5em; }
         p { margin-bottom: 1em; }
